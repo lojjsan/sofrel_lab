@@ -1,3 +1,5 @@
+package lab2;
+
 import java.util.*;
 
 /* Question 3 */
@@ -62,17 +64,17 @@ public class Lab2 {
         }
     }
 
-    public static void main(String[] args) {
-        Lab2 l = new Lab2();
-        int[] test_sort1 = {1,23,4,2,4,1,0,8};
-        System.out.println(l.Member(test_sort1, 7000));
-        System.out.println(l.Member(test_sort1, 0));
-        System.out.println(l.Member(test_sort1, 4));
+    // public static void main(String[] args) {
+    //     Lab2 l = new Lab2();
+    //     int[] test_sort1 = {1,23,4,2,4,1,0,8};
+    //     System.out.println(l.Member(test_sort1, 7000));
+    //     System.out.println(l.Member(test_sort1, 0));
+    //     System.out.println(l.Member(test_sort1, 4));
         
-        for (int i = 0; i < test_sort1.length ; i++) {
-            System.out.println(test_sort1[i]);
-        }
-    }
+    //     for (int i = 0; i < test_sort1.length ; i++) {
+    //         System.out.println(test_sort1[i]);
+    //     }
+    // }
 
 
 }
