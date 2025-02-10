@@ -5,28 +5,19 @@ import java.util.Random;
 
 public class Helper {
 
-    public Helper(){}
+    private Random r = new Random();
 
-    /*
-     * Permutations of N elements, choose 2
-     */
-    public int Permutations2(int N) {
-        int perms = 1;
-        for (int i = N; i > (N - 2); i--) {
-            perms *= i;
-        }
-        return perms;
+    public Helper() {
     }
 
     /**
      * @param N size of vector to generate
-     * @return a vector of size N with random numbers
+     * @return a vector of size N with random numbers from 0 to 100
      */
     public int[] GenerateRandomIntVector(int N) {
-        Random rand = new Random();
         int[] vec = new int[N];
-        for (int i = 0; i < N ; i++) {
-            vec[i] = rand.nextInt(100);
+        for (int i = 0; i < N; i++) {
+            vec[i] = r.nextInt(100);
         }
 
         return vec;
@@ -34,9 +25,10 @@ public class Helper {
 
     /**
      * Generates pairs of indices out of an array
+     * 
      * @param N size of array
      */
-    public ArrayList<int[]> GenerateIndexPairs(int N){
+    public ArrayList<int[]> GenerateIndexPairs(int N) {
 
         Boolean[][] visited = new Boolean[N][N];
         for (int k = 0; k < visited.length; k++) {
@@ -52,63 +44,58 @@ public class Helper {
                     continue;
                 }
                 if (i != j) {
-                    int[] tuple = {i, j};
+                    int[] tuple = { i, j };
                     pairs.add(tuple);
                     visited[i][j] = true;
-                    visited[j][i] = true; 
+                    visited[j][i] = true;
                 }
             }
         }
         return pairs;
     }
 
-    public int GenerateNegativeValue() {
-        Random r = new Random();
+    public int GenerateValue() {
         int val = 0;
-        while(val == 0 || val > 0) {
-            val = r.nextInt();
+        while (val == 0 || val < 0) {
+            val = r.nextInt(100);
         }
-        System.out.println(val);
-        return val;
-    }
-
-    public int GeneratePositiveValue() {
-        Random r = new Random();
-        int val = 0;
-        while(val == 0 || val < 0) {
-            val = r.nextInt();
-        }
-        // System.out.println(val);
         return val;
     }
 
     /**
      * Generate n random arrays of 5 elements with:
      * 2 negative values, 1 zero value, 2 positive values
+     * 
      * @param n amount of typical-value arrays
      * @return A vector of n random arrays with 5 elements
      */
     public int[][] GenerateTypicalValues(int n) {
         int[][] typicalValues = new int[n][5];
         for (int i = 0; i < n; i++) {
-            int[] subarray = {GenerateNegativeValue(), GenerateNegativeValue(), 0, GeneratePositiveValue(), GeneratePositiveValue()};
+            int[] subarray = { -(GenerateValue()), -(GenerateValue()), 0, GenerateValue(),
+                    GenerateValue() };
             typicalValues[i] = subarray;
         }
         return typicalValues;
     }
 
-    public static void main(String[] args) {
-        Helper help = new Helper();
-        int[][] typVal = help.GenerateTypicalValues(5);
-        for (int[] arr : typVal) {
-            String s = "";
-            for (int i = 0; i < arr.length; i++) {
-                s += arr[i] + " ";
-            }
-            System.out.println(s);
-            System.out.println("----------------");
+    public int[] GenerateTypicalKeyValues() {
+        int[] typicalValues = { -(GenerateValue()), -(GenerateValue()), 0, GenerateValue(), GenerateValue() };
+        return typicalValues;
+    }
+
+    /**
+     * @param arr, an array of arrays (with subarray length = 5)
+     * @return def, returns a vector with default value based on one of the values
+     *         in the subarrays
+     */
+    public int[] GenerateDefaultValues(int[][] arr) {
+        int[] def = new int[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            int idx = r.nextInt(arr[i].length - 1);
+            def[i] = arr[i][idx];
         }
-        // System.out.println(help.GeneratePairs(3));
-        // System.out.println(help.Permutations2(20));
+        return def;
     }
 }
