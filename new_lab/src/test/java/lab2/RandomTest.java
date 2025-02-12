@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 public class RandomTest {
+
     private final int N = 20;
     private final Lab2 l = new Lab2();
     private final Random rand = new Random();
@@ -14,8 +15,13 @@ public class RandomTest {
 
     @Test
     public void RandomVectorTest() {
+        System.out.println("Running RandomVectorTest()\n");
+        int testCount = 0;
+
         for (int i = 0; i < 10000; i++) {
-            // Initialize vector and key
+            testCount++;
+
+            // Initialize random vector and key
             int[] arr = help.GenerateRandomIntVector(N);
             int key = rand.nextInt(100);
 
@@ -29,8 +35,31 @@ public class RandomTest {
                 }
             }
 
-            // Asserts that output is the same as expected
+            // // Asserts that output is the same as expected
+            // String s = "arr before: [";
+            // for (int elem : arr) {
+            //     s += elem + " ";
+            // }
+            // s += "]";
+            // System.out.println(s);
+
             boolean output = l.Member(arr, key);
+
+            // String s1 = "arr after: [";
+            // for (int elem : arr) {
+            //     s1 += elem + " ";
+            // }
+            // s1 += "]";
+            // System.out.println(s1);
+
+            System.out.println("expected: " + expected);
+            System.out.println("output: " + output);
+
+            if (expected != output) {
+                System.out.println("Expected != Output at test case " + testCount + "\n");
+                assertEquals(expected, output);
+                break;
+            }
             assertEquals(expected, output);
 
         }

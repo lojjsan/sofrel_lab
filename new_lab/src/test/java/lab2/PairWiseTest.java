@@ -16,6 +16,8 @@ public class PairWiseTest {
 
     @Test
     public void PairWiseVectorTest() {
+        System.out.println("Running PairWiseVectorTest()\n");
+        int testCount = 0;
 
         // Initialize typical values for all
         int[][] typicalValues = help.GenerateTypicalValues(N);
@@ -27,6 +29,8 @@ public class PairWiseTest {
         ArrayList<int[]> idxPairs = help.GenerateIndexPairs(N + 1);
 
         for (int[] pair : idxPairs) {
+            testCount++;
+
             int[] tempArr = def;
             int key = defKey;
 
@@ -54,6 +58,12 @@ public class PairWiseTest {
 
                 // Asserts that output is the same as expected
                 boolean output = l.Member(tempArr, key);
+
+                if (expected != output) {
+                    System.out.println("Expected != Output at test case " + testCount + "\n");
+                    assertEquals(expected, output);
+                    break;
+                }
                 assertEquals(expected, output);
             }
 

@@ -10,12 +10,15 @@ public class Lab2 {
     }
 
     /* Bubble sort */
+    //@ requires A.length>0
+    //@ ensures \forall int i; 0<=i < A.length-1; A[i+1] >= A[i]
     public void Sort(int[] numbers) {
         int n = numbers.length;
         boolean swap;
         for (int i = 0; i < n - 1; i++) {
             swap = false;
             for (int j = 0; j < n - i - 1; j++) {
+                // if (numbers[j] < numbers[j + 1]) {      //injection 1
                 if (numbers[j] > numbers[j + 1]) {
                     int temp = numbers[j + 1];
                     numbers[j + 1] = numbers[j];
@@ -29,6 +32,12 @@ public class Lab2 {
         }
     }
 
+    //@ requires A.length>0 && \forall int x; 0<=x < A.length-1; A[x+1] >= A[x] && \exist int x; 0<=x < A.length; A[x]==key && \typeof(key)==type(int)
+    //@ ensures \result==x 
+    //@ also 
+    //@ requires A.length>0 && \forall int x; 0<=x < A.length - 1; A[x+1] >= A[x] && \forall int x; 0<=x < A.length; A[x] != key && \typeof(key)==type(int)
+    //@ ensures \result==-1 
+
     public int BinarySearch(int[] numbers, int key) {
         int x;
         int l;
@@ -38,6 +47,7 @@ public class Lab2 {
 
         do {
             x = (l + r) / 2;
+            // if (key > numbers[x]) {      //injection 2
             if (key < numbers[x]) {
                 r = x - 1;
             } else {
@@ -56,6 +66,13 @@ public class Lab2 {
      * membership queries on unsorted arrays of arbitrary length, by combining
      * program (i) with program (ii)
      */
+ 
+    //@ requires A.length>0 && \exist int x; 0<=x < A.length; A[x]==key && \typeof(key)==type(int)
+    //@ ensures \result==true
+    //@ also
+    //@ requires A.length>0 && \forall int x; 0<=x < A.length; A[x] != key && \typeof(key)==type(int)
+    //@ ensures \result==false 
+
     public boolean Member(int[] numbers, int key) {
         Sort(numbers);
         if (BinarySearch(numbers, key) == -1) {
