@@ -9,9 +9,10 @@ import org.junit.jupiter.api.Test;
 public class RandomTest {
 
     private final int N = 20;
-    private final Lab2 l = new Lab2();
+    private final Lab2 l = new Lab2(N);
     private final Random rand = new Random();
     private final Helper help = new Helper();
+    private final Oracle oracle = new Oracle();
 
     @Test
     public void RandomVectorTest() {
@@ -27,36 +28,22 @@ public class RandomTest {
 
             // Check if key is in the array
             // Create the expected output
-            boolean expected = false;
 
-            for (int elem : arr) {
-                if (elem == key) {
-                    expected = true;
-                }
-            }
+            // Asserts precondtion
+            assertFalse(oracle.checkIfNull(l.getArrayOfNumbers()));
 
-            // // Asserts that output is the same as expected
-            // String s = "arr before: [";
-            // for (int elem : arr) {
-            //     s += elem + " ";
-            // }
-            // s += "]";
-            // System.out.println(s);
+            l.setArrayOfNumbers(arr);
+            l.setKey(key);
 
-            boolean output = l.Member(arr, key);
+            
+            boolean output = l.Member();
 
-            // String s1 = "arr after: [";
-            // for (int elem : arr) {
-            //     s1 += elem + " ";
-            // }
-            // s1 += "]";
-            // System.out.println(s1);
-
-            System.out.println("expected: " + expected);
-            System.out.println("output: " + output);
-
+            // Create the expected output
+            boolean expected = oracle.checkIsMember(l.getArrayOfNumbers(), l.getKey());
+                
             if (expected != output) {
                 System.out.println("Expected != Output at test case " + testCount + "\n");
+                // Asserts that output is the same as expected
                 assertEquals(expected, output);
                 break;
             }

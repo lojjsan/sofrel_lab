@@ -9,10 +9,11 @@ import org.junit.jupiter.api.Test;
 
 public class PairWiseTest {
     private final int N = 20;
-    private final Lab2 l = new Lab2();
+    private final Lab2 l = new Lab2(N);
     private final Random r = new Random();
     private final Helper help = new Helper();
     private int typicalLength = 5;
+    private final Oracle oracle = new Oracle();
 
     @Test
     public void PairWiseVectorTest() {
@@ -24,7 +25,8 @@ public class PairWiseTest {
         int[] typicalKeyValues = help.GenerateTypicalKeyValues();
 
         int[] def = help.GenerateDefaultValues(typicalValues);
-        int defKey = typicalKeyValues[r.nextInt(typicalLength - 1)];
+        // int defKey = typicalKeyValues[r.nextInt(typicalLength - 1)];
+        int defKey = 0;
 
         ArrayList<int[]> idxPairs = help.GenerateIndexPairs(N + 1);
 
@@ -46,18 +48,22 @@ public class PairWiseTest {
                     tempArr[pair[1]] = typicalValues[pair[1]][i];
                 }
 
-                // Check if key is in the array
-                // Create the expected output
-                boolean expected = false;
+                // Check if key is in the array                
 
-                for (int elem : tempArr) {
-                    if (elem == key) {
-                        expected = true;
-                    }
-                }
+                l.setArrayOfNumbers(tempArr);
+                l.setKey(key);
 
+                //Asserts precondtion
+                assertFalse(oracle.checkIfNull(l.getArrayOfNumbers()));
+
+              
                 // Asserts that output is the same as expected
-                boolean output = l.Member(tempArr, key);
+                boolean output = l.Member();
+
+                // Create the expected output 
+                
+                boolean expected = oracle.checkIsMember(l.getArrayOfNumbers(), l.getKey());
+                
 
                 if (expected != output) {
                     System.out.println("Expected != Output at test case " + testCount + "\n");

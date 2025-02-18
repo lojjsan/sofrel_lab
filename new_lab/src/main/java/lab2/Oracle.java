@@ -11,10 +11,10 @@ public class Oracle {
      * @param key
      * @return true of the array exists, else false
      */
-    private boolean checkIfNull(int[] arr) {
+    public boolean checkIfNull(int[] arr) {
         if (arr == null) {
             return true;
-        } else return true;
+        } else return false;
     }
 
     /**
@@ -23,7 +23,7 @@ public class Oracle {
      * @param arr2
      * @return true if the arrays have the same length, else false
      */
-    private boolean checkIfLengthIsIdentical(int[] oldArr, int[] newArr) {
+    public boolean checkIfLengthIsIdentical(int[] oldArr, int[] newArr) {
         if (oldArr.length == newArr.length) return true;
         else return false;
     }
@@ -35,7 +35,7 @@ public class Oracle {
      * @param newArr integer array, new array which should be a permutation of oldArr
      * @return true if the newArr are a permuation of oldArr, else false
      */
-    private boolean checkIsPermutationOf(int[] oldArr, int[] newArr) {
+    public boolean checkIsPermutationOf(int[] oldArr, int[] newArr) {
         Map<Integer, Integer> oldFreq = new HashMap<Integer, Integer>();
         Map<Integer, Integer> newFreq = new HashMap<Integer, Integer>();
 
@@ -64,7 +64,7 @@ public class Oracle {
      * @param key ... is NOT in the list
      * @return true if key is NOT in the list, else false
      */
-    private boolean checkElemIsNotInList(int[] arr, int key) {
+    public boolean checkElemIsNotInList(int[] arr, int key) {
         for (int elem : arr) {
             if (key == elem) return false;
         }
@@ -77,12 +77,13 @@ public class Oracle {
      * @param key ... is in the list
      * @return true if key is in the list, else false
      */
-    private boolean checkElemIsInList(int[] arr, int key) {
-        boolean isInList = false;
+    public boolean checkElemIsInList(int[] arr, int key) {
         for (int elem : arr) {
-            if (key == elem) isInList = true;
+            if (elem == key) {
+                return true;
+            }
         }
-        return isInList;
+        return false;
     }
 
     /**
@@ -92,6 +93,6 @@ public class Oracle {
      * @return
      */
     public boolean checkIsMember(int[] arr, int key) {
-        if (checkElemIsInList(arr, key)) return true; else return false;
+        return checkElemIsInList(arr, key);
     }
 }
