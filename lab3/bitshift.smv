@@ -59,4 +59,3 @@ G ( Bit1 <-> (X Bit1) )
    -- the value of Bit1 now always equals the 
    -- value of Bit1 in the next time step
    -- This is obviously FALSE!
-

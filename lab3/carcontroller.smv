@@ -35,15 +35,43 @@ ASSIGN
 		      TRUE : state;
 	esac;
 
--- 1 trap property for node coverage (which node?)
+-- 1 trap property for node coverage (which node? The stop-state)
+-- The property says that we will never be in the state = stop
 LTLSPEC 
 	G( !(state = stop))
 
 -- Question 1. Write down the remaining 2 NC trap properties yourself
+-- 2. The property says that we will never be in the state = slow
+LTLSPEC 
+	G( !(state = slow))
+
+-- 3. The property says that we will never be in the state = fast
+LTLSPEC 
+	G( !(state = fast))
 
 -- 1 trap property for edge coverage (which edge?)
+-- The property says that if we are in state stop and accelerating, the next state is not state = slow
 LTLSPEC 
 	G( state=stop & accelerate -> X( !(state=slow) ) )
 
 -- Question 2. Write down the remaining 5 EC trap properties yourself
+-- 2. If we are in state slow, and we are not accelerating or braking - then the next state will not be stop
+LTLSPEC 
+	G( state=slow & !accelerate & !brake -> X( !(state=stop) ) )
+
+-- 3. If we are in state slow, and are braking - next state will not be stop
+LTLSPEC 
+	G( state=slow & brake -> X( !(state=stop) ) )
+
+-- 4. If we are in state fast, and are braking - next state will not be stop
+LTLSPEC 
+	G( state=fast & brake -> X( !(state=stop) ) )
+
+-- 5. If we are in state slow and are accelerating and not braking - next state will not be fast
+LTLSPEC 
+	G( state=slow & accelerate & !brake -> X( !(state=fast) ) )
+
+-- 6. If we are in state fast and are not accelerating and not braking - next state will not be slow
+LTLSPEC 
+	G( state=fast & !accelerate & !brake -> X( !(state=slow) ) )
 
